@@ -1,0 +1,4 @@
+FROM registry.suse.com/suse/sle15:latest AS base
+
+RUN zypper --non-interactive in nginx
+

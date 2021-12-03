@@ -1,0 +1,11 @@
+FROM registry.suse.com/suse/sle15:latest AS builder
+RUN zypper -n in curl && \
+    curl https://raw.githubusercontent.com/dcermak/zypp-downloader/main/zypp-downloader  > /bin/zypp-downloader && \
+    chmod +x /bin/zypp-downloader
+RUN zypp-downloader nginx && rm -f /var/cache/rpms/rpm-*.rpm
+
+FROM registry.suse.com/bci/minimal:latest
+WORKDIR /tmp/
+COPY --from=builder /var/cache/rpms/ .
+RUN for i in $(rpm -qa); do rm -f $i.rpm > /dev/null ; done
+RUN rpm -U *.rpm && rm -f *.rpm
