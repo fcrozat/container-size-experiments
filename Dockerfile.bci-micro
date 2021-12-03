@@ -1,0 +1,12 @@
+FROM registry.suse.com/bci/micro:latest AS minimal
+FROM registry.suse.com/suse/sle15:latest AS builder
+
+RUN mkdir /tmp/chroot
+COPY --from=minimal / /tmp/chroot/
+RUN zypper --root /tmp/chroot ar 'https://updates.suse.com/SUSE/Products/SLE-BCI/$releasever_major-SP$releasever_minor/$basearch/product/' SLE_BCI
+RUN zypper --root /tmp/chroot --non-interactive --gpg-auto-import-keys in --no-recommends nginx
+RUN zypper --root /tmp/chroot clean
+
+FROM minimal
+WORKDIR /
+COPY --from=builder /tmp/chroot/ /
