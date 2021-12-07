@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- OBS-Imagerepo: obsrepositories:/ -->
+
+<image schemaversion="6.5" name="nginx-image" xmlns:suse_label_helper="com.suse.label_helper">
+  <description type="system">
+    <author>SUSE LLC</author>
+    <contact>https://www.suse.com/</contact>
+    <specification>Minimal BCI</specification>
+  </description>
+  <preferences>
+	  <type image="docker"
+		  derived_from="obsrepositories:/bci/micro#15.3">
+      <containerconfig
+        name="bci/nginx"
+        tag="latest"
+	maintainer="SUSE LLC (https://www.suse.com/)"
+	>
+
+      </containerconfig>
+    </type>
+    <version>15.3.0</version>
+    <packagemanager>zypper</packagemanager>
+    <rpm-check-signatures>false</rpm-check-signatures>
+    <rpm-excludedocs>true</rpm-excludedocs>
+  </preferences>
+  <repository type='rpm-md'>
+    <source path="obsrepositories:/"/>
+  </repository>
+
+  <packages type="bootstrap">
+    <package name="nginx"/>
+  </packages>
+</image>
