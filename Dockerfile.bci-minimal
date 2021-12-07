@@ -1,8 +1,10 @@
 FROM registry.suse.com/suse/sle15:latest AS builder
+
 RUN zypper -n in curl && \
     curl https://raw.githubusercontent.com/dcermak/zypp-downloader/main/zypp-downloader  > /bin/zypp-downloader && \
     chmod +x /bin/zypp-downloader
-RUN zypp-downloader nginx && rm -f /var/cache/rpms/rpm-*.rpm
+COPY scratch-zypp.conf /tmp/
+RUN export ZYPP_CONF=/tmp/scratch-zypp.conf && zypp-downloader nginx && rm -f /var/cache/rpms/rpm-*.rpm
 
 FROM registry.suse.com/bci/minimal:latest
 WORKDIR /tmp/

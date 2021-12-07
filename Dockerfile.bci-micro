@@ -3,9 +3,8 @@ FROM registry.suse.com/suse/sle15:latest AS builder
 
 RUN mkdir /tmp/chroot
 COPY --from=minimal / /tmp/chroot/
-RUN zypper --root /tmp/chroot ar 'https://updates.suse.com/SUSE/Products/SLE-BCI/$releasever_major-SP$releasever_minor/$basearch/product/' SLE_BCI
-RUN zypper --root /tmp/chroot --non-interactive --gpg-auto-import-keys in --no-recommends nginx
-RUN zypper --root /tmp/chroot clean
+COPY scratch-zypp.conf /tmp/
+RUN export ZYPP_CONF=/tmp/scratch-zypp.conf && zypper --root /tmp/chroot ar 'https://updates.suse.com/SUSE/Products/SLE-BCI/$releasever_major-SP$releasever_minor/$basearch/product/' SLE_BCI && zypper --root /tmp/chroot al cracklib-dict-full && zypper --root /tmp/chroot --non-interactive --gpg-auto-import-keys in --no-recommends nginx && zypper --root /tmp/chroot clean -a
 
 FROM minimal
 WORKDIR /
