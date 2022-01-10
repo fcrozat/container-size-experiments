@@ -14,8 +14,8 @@ zypper --root $scratchmnt --non-interactive --releasever 15.3 --gpg-auto-import-
 zypper --root $scratchmnt --non-interactive clean -a
 
 # set some config info
-buildah config --label name=nginx-bci-scratch $newcontainer
+buildah config --label name=nginx-scratch-bci $newcontainer
 
 # commit the image
 buildah unmount $newcontainer
-buildah commit $newcontainer nginx-bci-buildah-scratch
+buildah commit $newcontainer nginx-buildah-bci-scratch

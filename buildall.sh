@@ -11,4 +11,4 @@ for name in bci-base bci-micro bci-minimal bci-scratch ubi8 ubi8-minimal ; do
    podman build -f "Dockerfile.$name" -t "nginx-docker-$name"
 done
 
-podman image ls -a | grep nginx
+podman image ls -a | grep nginx | sort

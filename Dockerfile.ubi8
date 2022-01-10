@@ -1,4 +1,4 @@
 FROM registry.access.redhat.com/ubi8/ubi
 
-RUN microdnf install nginx
+RUN dnf install --setopt install_weak_deps=false --nodocs -y nginx && yum clean all
 
