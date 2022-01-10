@@ -1,5 +1,7 @@
 Container size experiments
 
+Trying to build a nginx container using various base image
+
 To reproduce, run ./buildall.sh
 
 Run on Jan 10 2022
